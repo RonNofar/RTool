@@ -14,27 +14,16 @@ def main():
         file.writelines(data)
 
     # stage all files
-    t=check_output("git add *", stderr=subprocess.STDOUT).decode()
-    print(t)
-    t = check_output(
-        "git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag,
-        stderr=subprocess.STDOUT).decode()
-    print(str(t))
-    t=check_output("git tag %s"%tag, shell=True).decode()
-    print(t)
-    check_output("git push --tags origin master", shell=True).decode()
-    check_output("python setup.py sdist upload -r pypi", shell=True).decode()
+    run_command("git add *")
+    run_command("git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag)
+    run_command("git tag %s"%tag)
+    run_command("git push --tags origin master")
+    run_command("python setup.py sdist upload -r pypi")
 
 def run_command(command):
-    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
-    while True:
-        output = process.stdout.readline()
-        if output == '' and process.poll() is not None:
-            break
-        if output:
-            print(output.strip())
-    rc = process.poll()
-    return rc
+    print(check_output(
+        command,
+        stderr=subprocess.STDOUT).decode())
 
 if __name__=="__main__":
     main()
