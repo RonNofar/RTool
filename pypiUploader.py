@@ -1,3 +1,4 @@
+import subprocess
 from subprocess import check_output
 
 with open('setup.py', 'r') as file:
@@ -12,7 +13,7 @@ with open('setup.py', 'w') as file:
     file.writelines(data)
 
 # stage all files
-t=check_output("git add *", shell=True).decode()
+t=check_output("git add *", stderr=subprocess.STDOUT)
 print(t)
 check_output(
     "git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag,
