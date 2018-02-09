@@ -12,7 +12,8 @@ with open('setup.py', 'w') as file:
     file.writelines(data)
 
 # stage all files
-check_output("git add *", shell=True).decode()
+t=check_output("git add *", shell=True).decode()
+print(t)
 check_output(
     "git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag,
     shell=True).decode()
