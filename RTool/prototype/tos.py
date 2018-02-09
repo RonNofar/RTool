@@ -2,9 +2,9 @@ import sys, os, time
 rootPath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.split(os.path.split(rootPath)[0])[0])
 
-import RTool.util
+import RTool.util.importer as imp
 
-exec(RTool.util.importer.ImportHandler(
+exec(imp.ImportHandler(
     ["win32api, win32con, win32gui, win32ui"]))
 #import win32api, win32con, win32gui, win32ui
 from threading import Thread
