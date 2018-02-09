@@ -16,7 +16,8 @@ check_output("git add *", shell=True).decode()
 check_output(
     "git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag,
     shell=True).decode()
-check_output("git tag %s"%tag, shell=True).decode()
+t=check_output("git tag %s"%tag, shell=True).decode()
+print(t)
 check_output("git push --tags origin master", shell=True).decode()
 check_output("python setup.py sdist upload -r pypi", shell=True).decode()
 
