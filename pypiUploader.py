@@ -14,11 +14,11 @@ def main():
         file.writelines(data)
 
     # stage all files
-    t=check_output("git add *", stderr=subprocess.STDOUT)
+    t=check_output("git add *", stderr=subprocess.STDOUT).decode()
     print(t)
     t = check_output(
         "git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag,
-        stderr=subprocess.STDOUT)
+        stderr=subprocess.STDOUT).decode()
     print(str(t))
     t=check_output("git tag %s"%tag, shell=True).decode()
     print(t)
