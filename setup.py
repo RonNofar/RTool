@@ -1,8 +1,8 @@
-tag = '0.0.1.9'
-from distutils.core import setup
+tag = '0.0.1.9.1'
+from distutils.core import setup, find_packages
 setup(
   name = 'RTool',
-  packages = ['RTool'], # this must be the same as the name above
+  packages = find_packages(),#['RTool'], # this must be the same as the name above
   version = '%s'%tag,
   description = 'A random test lib',
   author = 'Ron Nofar',
