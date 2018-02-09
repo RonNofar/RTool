@@ -1,6 +1,6 @@
-tag = '0.0.1.9.2'
-from setuptools import find_packages
-from distutils.core import setup
+tag = '0.0.1.9.3'
+from setuptools import setup, find_packages
+#from distutils.core import setup
 setup(
   name = 'RTool',
   packages = find_packages(),#['RTool'], # this must be the same as the name above
