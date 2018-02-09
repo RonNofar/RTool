@@ -19,7 +19,7 @@ def main():
     t = check_output(
         "git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag,
         stderr=subprocess.STDOUT)
-    print(t)
+    print(t[0])
     t=check_output("git tag %s"%tag, shell=True).decode()
     print(t)
     check_output("git push --tags origin master", shell=True).decode()
