@@ -1,5 +1,6 @@
-tag = '0.0.1.9.1'
-from distutils.core import setup, find_packages
+tag = '0.0.1.9.2'
+from setuptools import find_packages
+from distutils.core import setup
 setup(
   name = 'RTool',
   packages = find_packages(),#['RTool'], # this must be the same as the name above
@@ -12,3 +13,5 @@ setup(
   keywords = ['testing', 'logging', 'example'], # arbitrary keywords
   classifiers = [],
 )
+
+#http://wiki.python.org/moin/Distutils/Cookbook/AutoPackageDiscovery
