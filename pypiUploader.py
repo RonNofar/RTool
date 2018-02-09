@@ -17,12 +17,11 @@ def main():
         run_command("git tag %s"%tag)
     except:
         print("FATAL ERROR: git tag might already exist")
-        return
+        
     run_command("git add *")
     run_command("git commit -a -m \"Auto Push\" -m \"Tag %s\""%tag)
     run_command("git push --tags origin master")
     run_command("python setup.py sdist upload -r pypi")
-    
 
 def run_command(command):
     print(check_output(

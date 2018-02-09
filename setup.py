@@ -1,4 +1,4 @@
-tag = '0.0.1.6'
+tag = '0.0.1.7'
 from distutils.core import setup
 setup(
   name = 'RTool',

@@ -1,4 +1,3 @@
-from RTool.prototype import *
-from RTool.util import *
+from RTool import *
 
 __all__ = ["prototype","util"]
