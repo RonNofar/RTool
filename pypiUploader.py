@@ -1,13 +1,20 @@
-import subprocess, shlex
+import subprocess, shlex, sys
 from subprocess import check_output
 
 def main():
+    run_command("echo poo")
     with open('setup.py', 'r') as file:
         data = file.readlines()
     print("Current",data[0])
 
     print("Tag:")
-    tag = input(">>> ")
+    tag = None
+    if sys.version_info[0] >= 3:
+        tag = input(">>> ")
+    elif sys.version_info[0] < 3:
+        tag = raw_input(">>> ")
+    else:
+        print("Invalid Python version.")
 
     data[0] = "tag = \'%s\'\n"%tag
     with open('setup.py', 'w') as file:
@@ -24,9 +31,7 @@ def main():
     run_command("python setup.py sdist upload -r pypi")
 
 def run_command(command):
-    print(check_output(
-        command,
-        stderr=subprocess.STDOUT).decode())
+    subprocess.call(command, shell=True)
 
 if __name__=="__main__":
     main()
