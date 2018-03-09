@@ -26,8 +26,8 @@ def ImportHandler(modules):
             exec("import %s"%i)
         except:
             if i in knowns:
-                i = knowns[i]
-            check_output("pip install --user %s"%i, shell=True).decode()
+                temp = knowns[i]
+            check_output("pip install --user %s"%temp, shell=True).decode()
             print("Installing %s..."%i)
         exec_string += "import %s\n"%i
     return(exec_string)
