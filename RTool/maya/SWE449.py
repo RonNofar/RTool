@@ -18,6 +18,12 @@ import RTool.maya.util as util
 wavPath = ("C:/Users/%s/Documents/maya/projects/default/sound/Keys_Noodle.wav"
     %getpass.getuser())
 
+def main():
+    sys.path.append("C:/Python27/Lib/site-packages")
+    sys.path.append(
+        "C:/Users/%s/AppData/Local/Programs/Python/Python36/Lib/site-packages"
+            %getpass.getuser())
+
 def CreateVisualizer(wavPath):
     mc.file(new=True, force=True)
     

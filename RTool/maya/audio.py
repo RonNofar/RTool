@@ -2,7 +2,8 @@
 
 Utility tools for maya audio
 
-~!* Must by run inside mayapy.exe *!~
+Notes:
+    * Must be run inside mayapy.exe !
 '''
 
 import maya.cmds as mc
