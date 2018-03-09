@@ -31,7 +31,7 @@ class Stopwatch():
 
     Look at module docstrings for example of usage.
 
-    Note:
+    Notes:
         The stop() method does not actually stop the Stopwatch. The
         Stopwatch object is only active when called so there is no need
         to worry about it continuing to run after you are done with it.

@@ -1,14 +1,29 @@
 '''RTool/image.py
 
-This module is a combination of various image manipulation tools.
+This module is a combination of various image manipulation tools. To be
+used in combination with RTool.video.
 
 '''
 
-def pixelateImage(image, savePath=rootPath, bitSize=32):
+def pixelateImage(imagePath, savePath=rootPath, bitSize=32):
+    '''Pixelate an image to a specified bit size.
+
+    This method currently only uses the median method of compression.
+
+    Args:
+        imagePath (str): The path to an image file
+        savePath (str): The path in which to save the output.
+            Defaults to the script's rootPath.
+        bitSize (int): The verticle resolution of the output image.
+            Defaults to 32.
+    Todo:
+        * Add more compression methods
+        * Fix horizontal bitScale and portrait style images
     
-    imgNameWithExtension = basename(image)
+    '''
+    imgNameWithExtension = basename(imagePath)
     imgName = imgNameWithExtension[:imgNameWithExtension.find('.')]
-    img = Image.open(image)
+    img = Image.open(imagePath)
     pixels = img.load()
 
     width, height = img.size

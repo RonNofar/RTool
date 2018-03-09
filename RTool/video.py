@@ -7,9 +7,10 @@ Most of these functions work based on directory paths since that was
 the functionality needed when these were written.
 
 Todo:
-    * Auto-handle directories
+    * Auto-handle directories creation
     * Combined methods
     * Fix mp4ToWav, check Notes
+    * Auto-handle conflicts
 '''
 
 from __future__ import division
@@ -71,8 +72,15 @@ def sequenceToVideo(dirPath, vType="mp4", fps=24):
     return videoPath
 
 def mp4ToSequence(videoPath, outDir=rootPath):
-    '''
+    '''Turn an mp4 into an image sequence.
 
+    Args:
+        videoPath (str): The path to the video file.
+        outDir (str): The path to the output directory. This should be
+            an empty folder so that the images can save with no conflict.
+
+    Returns:
+        int: The frames-per-second rate of the video file.
     '''
     videoNameWithExtension = os.path.basename(videoPath)
     videoName = videoNameWithExtension[:videoNameWithExtension.find(".")]
@@ -100,8 +108,18 @@ def mp4ToSequence(videoPath, outDir=rootPath):
     return fps
 
 def mp4ToWav(videoPath, wavName="audio.wav", savePath=rootPath):
-    '''
+    '''Extract mp4 file from video file.
 
+    Args:
+        videoPath (str): The path to the video file.
+        wavName (str): The name of the Wav file to be created.
+            Defaults to 'audio.wav'.
+        savePath (str): The diretory path to save the Wav file in.
+            Defaults to rootPath of script.
+
+    Returns:
+        str: The path to the newly created Wav file.
+        
     Notes:
         * Doesn't work if file already exists, freezes program.
     '''
@@ -112,8 +130,17 @@ def mp4ToWav(videoPath, wavName="audio.wav", savePath=rootPath):
     return wavPath
 
 def mapWavToMP4(wavPath, mp4Path):
-    '''
+    '''Maps a Wav audio file to a video file.
 
+    Creates the newly formed mp4 video file in the same directory as
+    the original but renames to have the prefix 'audio_'.
+    
+    Args:
+        wavPath (str): The path to the Wav audio file.
+        mp4Path (str): The path to the mp4 video file.
+
+    Returns:
+        str: The path to the newly created mp4 video/audio file.
     '''
     mp4Name = os.path.basename(mp4Path)
     newMP4Path = os.path.join(os.path.dirname(mp4Path),"audio_"+mp4Name)
@@ -130,7 +157,14 @@ def mapWavToMP4(wavPath, mp4Path):
     return newMP4Path
 
 def getMP4FPS(videoPath):
-    '''
+    '''Get the frames-per-second rate of a video file.
+
+    Args:
+        videoPath (str): The path to a video file.
+
+    Returns:
+        int: The frames-per-second of the video file.
+    
     Notes:
         * Only use when sequence already created, otherwise mp4ToSequence
             already returns fps.

@@ -8,6 +8,7 @@ RTool.egg-info/PKG-INFO
 RTool.egg-info/SOURCES.txt
 RTool.egg-info/dependency_links.txt
 RTool.egg-info/top_level.txt
+RTool/ffmpeg/__init__.py
 RTool/maya/SWE449.py
 RTool/maya/__init__.py
 RTool/maya/audio.py
