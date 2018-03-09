@@ -1,5 +1,5 @@
 import subprocess, shlex, sys
-from subprocess import check_output
+from subprocess import check_output, Popen, PIPE
 
 def main():
     run_command("echo poo")
@@ -32,6 +32,11 @@ def main():
 
 def run_command(command):
     print(subprocess.call(command, shell=True))
+    '''
+    command_args = shlex.split(command)
+    with Popen(command_args, stdout=PIPE) as proc:
+        print(proc.stdout.read())
+    '''
 
 if __name__=="__main__":
     main()
