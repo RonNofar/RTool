@@ -1,5 +1,5 @@
 import sys, os, time
-fromrootPath = os.path.dirname(os.path.realpath(__file__))
+rootPath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.split(os.path.split(rootPath)[0])[0])
 
 import RTool.util.importer as imp

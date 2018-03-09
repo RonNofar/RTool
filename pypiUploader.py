@@ -31,7 +31,7 @@ def main():
     run_command("python setup.py sdist upload -r pypi")
 
 def run_command(command):
-    subprocess.call(command, shell=True)
+    print(subprocess.call(command, shell=True))
 
 if __name__=="__main__":
     main()
