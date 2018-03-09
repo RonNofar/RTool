@@ -35,4 +35,5 @@ def ImportHandler(modules):
 knowns = {'win32api':'pypiwin32',
           'win32con':'pypiwin32',
           'win32gui':'pypiwin32',
-          'win32ui' :'pypiwin32'}
+          'win32ui' :'pypiwin32',
+          'PIL'     :'pillow'}
