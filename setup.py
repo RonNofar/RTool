@@ -1,4 +1,4 @@
-tag = '0.0.2.0.2'
+tag = '0.0.2.0.3'
 from setuptools import setup, find_packages
 #from distutils.core import setup
 setup(
