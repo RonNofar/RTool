@@ -1,3 +1,9 @@
+'''
+
+Todo:
+    * Create prompts for version, description, keywords
+'''
+
 import subprocess, shlex, sys
 from subprocess import check_output, Popen, PIPE
 

@@ -3,3 +3,5 @@ setup.cfg
 setup.py
 RTool\__init__.py
 RTool\test.py
+
+include RTool\ffmpeg\bin\ffmpeg.exe
