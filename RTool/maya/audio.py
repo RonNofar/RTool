@@ -30,10 +30,16 @@ def AudioNode(mashNetwork, filePath):
     fileNameWithExtention = ntpath.basename(filePath)
     fileName= fileNameWithExtention[:fileNameWithExtention.find(".")]
     audioNode = mashNetwork.addNode("MASH_Audio")
+
+    # sets playback to realtime
+    mc.playbackOptions(edit=True, playbackSpeed=1, maxPlaybackSpeed=0)  
+
+    # found that this is what Maya does in the background when done manually
+    fileName = ''.join([i for i in fileName if not i.isdigit()])
+    fileName = fileName.replace(' ', '_')
     
-    mc.playbackOptions(edit=True, playbackSpeed=1, maxPlaybackSpeed=0) # sets playback to realtime 
-    
-    mel.eval("file -import -type \"audio\"  -ignoreVersion -ra true -mergeNamespacesOnClash false -namespace \"%se\" -options \"o=0\"  -pr  -importTimeRange \"combine\" \"%s\";"%(fileName,filePath))
+    mel.eval("file -import -type \"audio\"  -ignoreVersion -ra true -mergeNamespacesOnClash false -namespace \"%s\" -options \"o=0\"  -pr  -importTimeRange \"combine\" \"%s\";"
+             %(fileName, filePath))
     mel.eval("doSoundImportArgList (\"1\", {\"%s\",\"0\"});"%(filePath))
     
     mc.setAttr(audioNode.name+".filename", filePath,type="string")
