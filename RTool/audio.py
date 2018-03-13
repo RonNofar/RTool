@@ -35,7 +35,7 @@ def convertToWav(originalFilePath, savePath):
 
     wavPath = os.path.join(savePath, fileName+'.wav')
     command = ("ffmpeg -i %s %s"
-               %(os.path.basename(originalFilePath), wavPath)]
+               %(os.path.basename(originalFilePath), wavPath))
 
     subprocess.call(command, shell=True)
     

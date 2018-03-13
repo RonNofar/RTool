@@ -1,6 +1,7 @@
 setup.cfg
 setup.py
 RTool/__init__.py
+RTool/audio.py
 RTool/image.py
 RTool/time.py
 RTool/video.py
