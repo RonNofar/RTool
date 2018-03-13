@@ -25,8 +25,12 @@ def convertToWav(originalFilePath, savePath):
 
     Returns:
         str: The path to the newly created Wav file.
+        
     Note:
         *Prevention of loss of quality is not assured.
+
+    Todo:
+        * Make acceptable list work
     '''
     acceptable = ['flac','mp3']
 
@@ -34,10 +38,10 @@ def convertToWav(originalFilePath, savePath):
     fileName = fileNameWithExtention[:fileNameWithExtention.find(".")]
 
     wavPath = os.path.join(savePath, fileName+'.wav')
-    command = ("ffmpeg -i %s %s"
-               %(os.path.basename(originalFilePath), wavPath))
+    command = ("ffmpeg -i \"%s\" \"%s\""
+               %(originalFilePath, wavPath))
 
-    subprocess.call(command, shell=True)
+    print(subprocess.call(command, shell=True))
     
     return wavPath
 

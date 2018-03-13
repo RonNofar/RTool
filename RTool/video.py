@@ -124,7 +124,7 @@ def mp4ToWav(videoPath, wavName="audio.wav", savePath=rootPath):
         * Doesn't work if file already exists, freezes program.
     '''
     wavPath = os.path.join(savePath, wavName)
-    command = ("ffmpeg -i %s -ab 160k -ac 2 -ar 44100 -vn %s"
+    command = ("ffmpeg -i \"%s\" -ab 160k -ac 2 -ar 44100 -vn \"%s\""
                %(videoPath, wavPath))
     subprocess.call(command, shell=True)
     return wavPath
@@ -146,11 +146,11 @@ def mapWavToMP4(wavPath, mp4Path):
     newMP4Path = os.path.join(os.path.dirname(mp4Path),"audio_"+mp4Name)
     
     # was working, not anymore...
-    command = ("ffmpeg -i %s -i %s -vcodec copy -acodec copy %s"
+    command = ("ffmpeg -i \"%s\" -i \"%s\" -vcodec copy -acodec copy \"%s\""
                %(mp4Path, wavPath, newMP4Path))
 
     # currently working
-    commnd2 = ("ffmpeg -i %s -i %s -c:v copy -c:a aac -strict experimental %s"
+    commnd2 = ("ffmpeg -i \"%s\" -i \"%s\" -c:v copy -c:a aac -strict experimental \"%s\""
                %(mp4Path, wavPath, newMP4Path))
     
     subprocess.call(commnd2, shell=True)
