@@ -1,9 +1,10 @@
 '''RTool/maya/audio.py
 
-Utility tools for maya audio
+Utility tools for Maya audio
 
 Notes:
     * Must be run inside mayapy.exe !
+    * Not to be confused with RTool.audio !
 '''
 
 import maya.cmds as mc
