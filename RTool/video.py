@@ -35,9 +35,15 @@ def sequenceToVideo(dirPath, vType="mp4", fps=24):
         fps (int): The frames-per-second rate of the video. Defaults
             to 24.
 
+    Attributes:
+        acceptableExtensions (str[]): The list of acceptable extensions
+            for image type files. (Move to module level as specific?)
+    
     Returns:
         string: The path to the created video file.
     '''
+    acceptableExtensions = ["png","jpg","jpeg"]
+    
     dirList = os.listdir(dirPath)
     os.chdir(dirPath)
 
@@ -52,7 +58,7 @@ def sequenceToVideo(dirPath, vType="mp4", fps=24):
     index = 0
     imgs = []
     for i in dirList:
-        if (i[i.rfind('.')+1:] in acceptableExtensions):
+        if (i[i.rfind('.')+1:].lower() in acceptableExtensions):
             #print(Image.open(os.path.join(dirPath, i)).size)
             imgs.append(imageio.imread(os.path.join(dirPath, i)))
             writer.append_data(imgs[index])
