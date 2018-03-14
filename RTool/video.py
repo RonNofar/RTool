@@ -22,6 +22,8 @@ exec(ImportHandler(["imageio","PIL"]))
 
 from PIL import Image, ImageStat
 
+from RTool.time import Stopwatch
+
 rootPath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(os.path.split(rootPath)[0],"ffmpeg","bin"))
 
@@ -43,6 +45,8 @@ def sequenceToVideo(dirPath, vType="mp4", fps=24):
         string: The path to the created video file.
     '''
     acceptableExtensions = ["png","jpg","jpeg"]
+
+    stopwatch = Stopwatch()
     
     dirList = os.listdir(dirPath)
     os.chdir(dirPath)
@@ -88,6 +92,7 @@ def mp4ToSequence(videoPath, outDir=rootPath):
     Returns:
         int: The frames-per-second rate of the video file.
     '''
+    stopwatch = Stopwatch()
     videoNameWithExtension = os.path.basename(videoPath)
     videoName = videoNameWithExtension[:videoNameWithExtension.find(".")]
     reader = imageio.get_reader(videoPath, 'ffmpeg')
