@@ -21,7 +21,8 @@ Example:
 
 '''
 
-import time as ti
+from __future__ import absolute_import
+import time
 
 class Stopwatch():
     '''The Stopwatch class.
@@ -41,12 +42,12 @@ class Stopwatch():
         self.totalTime = 0
         self.start()
     def start(self):
-        self.initialTime = ti.time()
+        self.initialTime = time.time()
     def stop(self):
-        self.totalTime = ti.time() - self.initialTime
+        self.totalTime = time.time() - self.initialTime
         print(self.getFormattedTime(self.totalTime))
     def current(self):
-        totalTime = ti.time() - self.initialTime
+        totalTime = time.time() - self.initialTime
         return self.getFormattedTime(totalTime)
     def getFormattedTime(self, seconds):
         m, s = divmod(seconds, 60)
