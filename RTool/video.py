@@ -27,6 +27,8 @@ from RTool.time import Stopwatch
 rootPath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(os.path.split(rootPath)[0],"ffmpeg","bin"))
 
+imageio.plugins.ffmpeg.download()
+
 def sequenceToVideo(dirPath, vType="mp4", fps=24):
     '''Turn a directory of an image sequence into a video format.
 
