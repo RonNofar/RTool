@@ -70,12 +70,12 @@ def sequenceToVideo(dirPath, vType="mp4", fps=24):
             index += 1
 
         if ((fifth < 50) and (index % fifth == 0)) or (index % 50 == 0):
-            print("sequenceToMP4: %d/%d || %04.2f%% || %s"
+            print("sequenceToVideo: %d/%d || %04.2f%% || %s"
                   %(index, dirListLength, index/dirListLength*100, stopwatch.current()))
         subindex+=1
 
     writer.close()
-    print("sequenceToMP4: %d/%d || 100%%"
+    print("sequenceToVideo: %d/%d || 100%%"
           %(dirListLength,dirListLength))
 
     videoPath = os.path.join(dirPath, fileName)
