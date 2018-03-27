@@ -8,7 +8,6 @@ import subprocess, shlex, sys
 from subprocess import check_output, Popen, PIPE
 
 def main():
-    run_command("echo poo")
     with open('setup.py', 'r') as file:
         data = file.readlines()
     print("Current",data[0])
