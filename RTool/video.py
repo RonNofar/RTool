@@ -25,7 +25,8 @@ from PIL import Image, ImageStat
 from RTool.time import Stopwatch
 
 rootPath = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.join(os.path.split(rootPath)[0],"ffmpeg","bin"))
+ffmpegPath = os.path.join(os.path.split(rootPath)[0],"RTool","ffmpeg","bin")
+sys.path.append(ffmpegPath)
 
 imageio.plugins.ffmpeg.download()
 
@@ -137,8 +138,8 @@ def mp4ToWav(videoPath, wavName="audio.wav", savePath=rootPath):
         * Doesn't work if file already exists, freezes program.
     '''
     wavPath = os.path.join(savePath, wavName)
-    command = ("ffmpeg -i \"%s\" -ab 160k -ac 2 -ar 44100 -vn \"%s\""
-               %(videoPath, wavPath))
+    command = ("%s\\ffmpeg -i \"%s\" -ab 160k -ac 2 -ar 44100 -vn \"%s\""
+               %(ffmpegPath, videoPath, wavPath))
     subprocess.call(command, shell=True)
     return wavPath
 
