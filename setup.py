@@ -1,4 +1,4 @@
-tag = '0.0.2.2.6'
+tag = '0.0.2.2.7'
 from setuptools import setup, find_packages
 #from distutils.core import setup
 setup(
@@ -11,8 +11,8 @@ setup(
   url = 'https://github.com/RonNofar/RToolPackage', # use the URL to the github repo
   download_url = 'https://github.com/RonNofar/RToolPackage/archive/%s.tar.gz'%tag, # I'll explain this in a second
   keywords = ['RTool', 'win32', 'Maya'], # arbitrary keywords
-  classifiers = [],
-  package_data={'RTool' : ['ffmpeg/bin/ffmpeg.exe']}#,include_package_data=True
+  classifiers = []#,
+  #package_data={'RTool' : ['ffmpeg/bin/ffmpeg.exe']}#,include_package_data=True
 )
 
 #http://wiki.python.org/moin/Distutils/Cookbook/AutoPackageDiscovery
