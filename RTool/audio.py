@@ -40,8 +40,8 @@ def convertToWav(originalFilePath, savePath):
     fileName = fileNameWithExtention[:fileNameWithExtention.find(".")]
 
     wavPath = os.path.join(savePath, fileName+'.wav')
-    command = ("ffmpeg -i \"%s\" \"%s\""
-               %(originalFilePath, wavPath))
+    command = ("%s -i \"%s\" \"%s\""
+               %(ffmpegPath, originalFilePath, wavPath))
 
     print(subprocess.call(command, shell=True))
     
