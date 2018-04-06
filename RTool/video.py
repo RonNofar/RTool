@@ -23,12 +23,15 @@ exec(ImportHandler(["imageio","PIL"]))
 from PIL import Image, ImageStat
 
 from RTool.time import Stopwatch
+from RTool.ffmpeg import util
 
 rootPath = os.path.dirname(os.path.realpath(__file__))
-ffmpegPath = os.path.join(os.path.split(rootPath)[0],"RTool","ffmpeg","bin")
+ffmpegPath = os.path.join(
+    os.path.split(rootPath)[0],"RTool","ffmpeg","bin","ffmpeg")
 sys.path.append(ffmpegPath)
 
 imageio.plugins.ffmpeg.download()
+ffmpegPath = util.downloadPath()
 
 def sequenceToVideo(dirPath, vType="mp4", fps=24):
     '''Turn a directory of an image sequence into a video format.
@@ -138,7 +141,7 @@ def mp4ToWav(videoPath, wavName="audio.wav", savePath=rootPath):
         * Doesn't work if file already exists, freezes program.
     '''
     wavPath = os.path.join(savePath, wavName)
-    command = ("%s\\ffmpeg -i \"%s\" -ab 160k -ac 2 -ar 44100 -vn \"%s\""
+    command = ("%s -i \"%s\" -ab 160k -ac 2 -ar 44100 -vn \"%s\""
                %(ffmpegPath, videoPath, wavPath))
     subprocess.call(command, shell=True)
     return wavPath
@@ -164,10 +167,10 @@ def mapWavToMP4(wavPath, mp4Path):
                %(mp4Path, wavPath, newMP4Path))
 
     # currently working
-    commnd2 = ("ffmpeg -i \"%s\" -i \"%s\" -c:v copy -c:a aac -strict experimental \"%s\""
-               %(mp4Path, wavPath, newMP4Path))
+    command = ("%s -i \"%s\" -i \"%s\" -c:v copy -c:a aac -strict experimental \"%s\""
+               %(ffmpegPath, mp4Path, wavPath, newMP4Path))
     
-    subprocess.call(commnd2, shell=True)
+    subprocess.call(command, shell=True)
     return newMP4Path
 
 def getMP4FPS(videoPath):

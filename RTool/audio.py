@@ -9,6 +9,8 @@ Note:
 
 '''
 import os, subprocess
+from RTool.ffmpeg import util
+ffmpegPath = util.downloadPath()
 
 def convertToWav(originalFilePath, savePath):
     '''Convert an acceptable audio file into a Wav file.
