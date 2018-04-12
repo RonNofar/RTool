@@ -103,6 +103,16 @@ def appendPackages():
         "C:/Users/%s/AppData/Local/Programs/Python/Python36/Lib/site-packages"
             %getpass.getuser())
 
+def render():
+    '''WIP
+
+    '''
+    # For arnold renders
+    default = "defaultArnoldDriver"
+
+    # Set to png output
+    mc.setAttr("%s.aiTranslator"%default, "png", type="string")
+
 '''
 def main():
     

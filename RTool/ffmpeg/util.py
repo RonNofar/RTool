@@ -1,5 +1,10 @@
 '''RTool/ffmpeg/util.py
 
+Works directly with imageio package.
+
+imageio downloads its own version of ffmpeg so to save space on this module
+I made this to point directly to the newly downloaded ffmpeg.
+
 '''
 
 import subprocess, os, sys
@@ -9,8 +14,9 @@ exec(ImportHandler(["imageio"]))
 
 def downloadPath():
     dirList = None; ffmpegFile = None
-    ffmpegPath = ("C:\\Users\\%s\\AppData\\Local\\imageio\\ffmpeg"
-                  %(os.environ["USERNAME"]))
+    ffmpegPath = os.path.join(
+        os.environ["APPDATA"][:-7),"Local","imageio","ffmpeg")
+    # Known to work for Windows 10
 
     while True:
         dirList = sorted(os.listdir(ffmpegPath))
@@ -19,7 +25,7 @@ def downloadPath():
         else:
             break
 
-    print(dirList)
+    #print(dirList)
     if len(dirList) > 1:
         for i in range(1,len(dirList)):
             ffmpegFile = dirList[-i]
@@ -35,7 +41,7 @@ def downloadPath():
 
     return ffmpegPath
 
-print(downloadPath())
+#print(downloadPath())
 
 
 
