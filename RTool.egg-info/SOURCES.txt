@@ -15,6 +15,7 @@ RTool/ffmpeg/bin/__init__.py
 RTool/ffmpeg/bin/ffmpeg.exe
 RTool/maya/SWE449.py
 RTool/maya/__init__.py
+RTool/maya/attributeComparerGUI.py
 RTool/maya/audio.py
 RTool/maya/util.py
 RTool/prototype/__init__.py
