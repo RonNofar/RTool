@@ -4,27 +4,7 @@ dictionaries = [0] * 2
 texts = []
 #print(originalMatrix)
 
-win = mc.window(title = "Attribute Checker")#, wh=(158,512))
-
-col = mc.columnLayout(adjustableColumn=True)
-nodeTextField = mc.textField(alwaysInvokeEnterCommandOnReturn=True, text="Node Name")
-mc.rowLayout(numberOfColumns=2, columnAlign=[(1, "center"),(2,"center")])
-mc.columnLayout()
-mc.button(label="Set Original", command="setMatrix(dictionaries, 0)")
-texts.append(mc.text(label="Set: No", align="center"))
-mc.setParent("..")
-mc.columnLayout()
-mc.button(label="Set Changed", command="setMatrix(dictionaries, 1)")
-texts.append(mc.text(label="Set: No", align="center"))
-mc.setParent("..")
-mc.setParent("..")
-mc.separator()
-readyText = mc.text(label="Is Ready: No", align="center")
-mc.button(label="Compare Changes", command="compareChanges(dictionaries)")
-
-mc.showWindow(win)
-
-def setMatrix(dictionaries, num):
+def setMatrix(nodeTextField, dictionaries, num):
     nodeText = mc.textField(nodeTextField, query=True, text=True)
     #print(mc.listAttr(nodeText))
     tempDictionary = {}
@@ -108,7 +88,39 @@ class compareChanges():
         mc.separator(height=5, style="in")
         self.handleCommand(i)
         mc.setParent("..")
-        
+
+def attributeComparerGUI():
+    def sM(dictionaries, index):
+        print("test")
+        setMatrix(dictionaries, 1)
+    win = mc.window(title = "Attribute Checker")#, wh=(158,512))
+
+    col = mc.columnLayout(adjustableColumn=True)
+    nodeTextField = mc.textField(alwaysInvokeEnterCommandOnReturn=True, text="Node Name")
+    mc.rowLayout(numberOfColumns=2, columnAlign=[(1, "center"),(2,"center")])
+    mc.columnLayout()
+    mc.button(
+        label="Set Original",
+        command=lambda nodeTextField, dictionaries:
+            setMatrix(nodeTextField, dictionaries, 0))
+    texts.append(mc.text(label="Set: No", align="center"))
+    mc.setParent("..")
+    mc.columnLayout()
+    mc.button(
+        label="Set Changed",
+        command=lambda nodeTextField, dictionaries:
+            setMatrix(nodeTextField, dictionaries, 1))
+    texts.append(mc.text(label="Set: No", align="center"))
+    mc.setParent("..")
+    mc.setParent("..")
+    mc.separator()
+    readyText = mc.text(label="Is Ready: No", align="center")
+    mc.button(label="Compare Changes", command=lambda dictionaries: compareChanges(dictionaries))
+
+    mc.showWindow(win)
+
+if __name__ == "__main__":
+    attributeComparerGUI()
             
 
     
