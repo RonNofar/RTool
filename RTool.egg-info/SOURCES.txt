@@ -12,7 +12,6 @@ RTool.egg-info/top_level.txt
 RTool/ffmpeg/__init__.py
 RTool/ffmpeg/util.py
 RTool/ffmpeg/bin/__init__.py
-RTool/ffmpeg/bin/ffmpeg.exe
 RTool/maya/SWE449.py
 RTool/maya/__init__.py
 RTool/maya/attributeComparerGUI.py

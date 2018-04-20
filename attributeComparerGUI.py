@@ -12,53 +12,63 @@ class attributeComparerWindow:
         win = mc.window(title = "Attribute Checker")#, wh=(158,512))
 
         col = mc.columnLayout(adjustableColumn=True)
-        self.nodeTextField = mc.textField(alwaysInvokeEnterCommandOnReturn=True, text="Node Name")
+        self.defaultNodeTextFieldText = "Node Name"
+        self.nodeTextField = mc.textField(
+            alwaysInvokeEnterCommandOnReturn=True,
+            text=self.defaultNodeTextFieldText)
         mc.rowLayout(numberOfColumns=2, columnAlign=[(1, "center"),(2,"center")])
         mc.columnLayout()
-        partialSetMatrix = partial(self.setMatrix, self.dictionaries)
+        #partialSetMatrix = partial(self.setMatrix, self.dictionaries)
+        #1def partialSetMatrix(num):
+          #  print("test: ", num)
+           # self.setMatrix(self.dictionaries, num)
         mc.button(
             label="Set Original",
-            command=partialSetMatrix(0))#lambda self, dictionaries: #
+            command=partial(self.setMatrix, self.dictionaries, 0))#"partialSetMatrix(0)")#lambda self, dictionaries: #
                 #self.setMatrix(dictionaries, 0))
         self.texts.append(mc.text(label="Set: No", align="center"))
         mc.setParent("..")
         mc.columnLayout()
         mc.button(
             label="Set Changed",
-            command=partialSetMatrix(1))#partial(self.setMatrix, self.dictionaries))#lambda self, dictionaries:
+            command=partial(self.setMatrix, self.dictionaries, 1))#"partialSetMatrix(1)")#partial(self.setMatrix, self.dictionaries))#lambda self, dictionaries:
                 #self.setMatrix(dictionaries, 1))
         self.texts.append(mc.text(label="Set: No", align="center"))
         mc.setParent("..")
         mc.setParent("..")
         mc.separator()
-        readyText = mc.text(label="Is Ready: No", align="center")
+        self.readyText = mc.text(label="Is Ready: No", align="center")
         mc.button(
             label="Compare Changes",
-            command=lambda dictionaries: compareChanges(dictionaries))
+            command=partial(self.refCompareChanges))
 
         mc.showWindow(win)
 
-    def setMatrix(self, dictionaries, num):
+    def setMatrix(self, dictionaries, num, *args):
         nodeText = mc.textField(self.nodeTextField, query=True, text=True)
         print(nodeText)
         #print(mc.listAttr(nodeText))
         tempDictionary = {}
-        for i in mc.listAttr(nodeText):
-            #print(i)
-            try:
-                tempDictionary[i] = (
-                    mc.getAttr("%s.%s"%(nodeText, i), silent=True, asString=True), 
-                    mc.getAttr("%s.%s"%(nodeText, i), silent=True, asString=True, type=True),
-                    mc.getAttr("%s.%s"%(nodeText, i), silent=True))
-            except (RuntimeError, ValueError, TypeError) as e:
-                tempDictionary[i] = ("FAILED","NONE","FAILED")
-        #print(tempDictionary)        
-        
-        dictionaries[num] = tempDictionary
-        mc.text(self.texts[num], edit=True, label="Set: Yes")
-        
-        if dictionaries[0] != 0 and dictionaries[1] != 0:
-            mc.text(readyText, edit=True, label="Is Ready: Yes")
+        if nodeText != self.defaultNodeTextFieldText:
+            for i in mc.listAttr(nodeText):
+                #print(i)
+                try:
+                    tempDictionary[i] = (
+                        mc.getAttr("%s.%s"%(nodeText, i), silent=True, asString=True), 
+                        mc.getAttr("%s.%s"%(nodeText, i), silent=True, asString=True, type=True),
+                        mc.getAttr("%s.%s"%(nodeText, i), silent=True))
+                except (RuntimeError, ValueError, TypeError) as e:
+                    tempDictionary[i] = ("FAILED","NONE","FAILED")
+            #print(tempDictionary)        
+            
+            self.dictionaries[num] = tempDictionary
+            mc.text(self.texts[num], edit=True, label="Set: Yes")
+            
+            if self.dictionaries[0] != 0 and self.dictionaries[1] != 0:
+                mc.text(self.readyText, edit=True, label="Is Ready: Yes")
+                
+    def refCompareChanges(self, *args):
+        compareChanges(self.dictionaries)
         
 class compareChanges():
 
@@ -71,6 +81,7 @@ class compareChanges():
     comparisons = {}
         
     def __init__(self, dictionaries):
+        print("huh: ",dictionaries)
         self.dictionaries = dictionaries
         
         win = mc.window(title="Attribute Comparison", resizeToFitChildren=True)
