@@ -15,7 +15,7 @@ exec(ImportHandler(["imageio"]))
 def downloadPath():
     dirList = None; ffmpegFile = None
     ffmpegPath = os.path.join(
-        os.environ["APPDATA"][:-7]),"Local","imageio","ffmpeg")
+        os.environ["APPDATA"][:-7],"Local","imageio","ffmpeg")
     # Known to work for Windows 10
 
     while True:

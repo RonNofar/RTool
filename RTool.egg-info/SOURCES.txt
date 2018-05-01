@@ -1,6 +1,7 @@
 setup.cfg
 setup.py
 RTool/__init__.py
+RTool/attributeComparerGUI.py
 RTool/audio.py
 RTool/image.py
 RTool/time.py
@@ -12,6 +13,7 @@ RTool.egg-info/top_level.txt
 RTool/ffmpeg/__init__.py
 RTool/ffmpeg/util.py
 RTool/ffmpeg/bin/__init__.py
+RTool/maya/OptionsWindowBaseClass.py
 RTool/maya/SWE449.py
 RTool/maya/__init__.py
 RTool/maya/attributeComparerGUI.py
