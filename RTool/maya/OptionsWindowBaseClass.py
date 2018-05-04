@@ -58,7 +58,8 @@ class OptionsWindow(object):
     def editMenuResetCmd(self,*args):pass
     
     def actionCmd(self,*args):
-        print "ACTION"
+        self.applyBtnCmd()
+        self.closeBtnCmd()
     def applyBtnCmd(self,*args):
         print "APPLY"
     def closeBtnCmd(self,*args):

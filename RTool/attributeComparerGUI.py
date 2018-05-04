@@ -81,7 +81,6 @@ class compareChanges():
     comparisons = {}
         
     def __init__(self, dictionaries):
-        print("huh: ",dictionaries)
         self.dictionaries = dictionaries
         
         win = mc.window(title="Attribute Comparison", resizeToFitChildren=True)
@@ -98,16 +97,27 @@ class compareChanges():
 
         mc.showWindow(win)
         
-    def informationWindow(self, key):
+    def informationWindow(self, key, *args):
         win = mc.window(title="Attribute Information")
         mc.columnLayout(adj=1)
-        mc.rowLayout(numberOfColumns=2)
+        mc.rowLayout(numberOfColumns=1)
         exec("name="+self.commands[0]) in locals(), globals()
+        exec("oValue="+self.commands[1]) in locals(), globals()
         print(key)
-        mc.textFieldGrp(label="Name", text=name, enable=False)
-        #exec("nameType="+self.commands[1]) in locals(), globals()
+        mc.columnLayout()
+        mc.textFieldGrp(label="Name", text=name, enable=True)
+        '''
+        mc.columnLayout()
+        mc.text(label="Name")
+        mc.text(label="Original Value")
+        mc.setParent("..")
+        mc.columnLayout()
+        mc.text(label=name, backgroundColor=[0,0,0])
+        mc.text(label=oValue, backgroundColor=[0,0,0])
+        '''
+        exec("nameType="+self.commands[1]) in locals(), globals()
         #print(type)
-        #mc.textFieldGrp(label="Type", text=nameType, enable=False)#self.dictionaries[1][key][1]
+        mc.textFieldGrp(label="Type", text=nameType, enable=False)#self.dictionaries[1][key][1]
         
         mc.showWindow(win)
         
@@ -124,9 +134,18 @@ class compareChanges():
                         check = True
                 tempText = mc.text(label=tempString[:35], height=15)  
                 if check:
-                    mc.text(tempText, edit=True, font="boldLabelFont", backgroundColor=(1,0.5,0.5))
+                    mc.text(
+                        tempText,
+                        edit=True,
+                        font="boldLabelFont",
+                        backgroundColor=(1,0.5,0.5))
             else:
-                mc.button(label="Real Value", height=15, command=lambda key : self.informationWindow(key))#informationWindow(key)")#"print(%s)"%dictionaries[1][key][2], height=15)
+                mc.button(
+                    label="Real Value",
+                    height=15,
+                    command=partial(
+                        self.informationWindow,
+                        key))#lambda key : self.informationWindow(key))#informationWindow(key)")#"print(%s)"%dictionaries[1][key][2], height=15)
         
     def createColumn(self, i):
         mc.columnLayout()
@@ -139,10 +158,13 @@ class compareChanges():
 #    attributeComparerWindow()
 # see below for bit more modular version
 
-if __name__ == "__main__":
+def main():
     attributeComparerWindow()
+
+if __name__ == "__main__":
+    main()
 else:
-    exec("def %s():\n\tattributeComparerWindow()"
+    exec("def %s():\n\tmain()"
         %os.path.basename(__file__).split('.')[0])
             
 
