@@ -3,17 +3,45 @@
 Deployable tool that compares the attributes of a specific node
 between two different save states.
 
+Usage:
+    The two usage case scenarios::
+        1. In Maya script editor, load or paste the script and execute.
+        2. Use provided UserSetup.py script to deploy tool to Maya's
+           menu bar. Then click Scripts->attributeComparer.py .
+
 Author:
     Ron Nofar
 
+Last updated:
+    May 2018 (Check GitHub for exact date and time)
 '''
+
 from OptionsWindowBaseClass import OptionsWindow
+from functools import partial
 
 import time
+import maya.cmds as mc
 
-class attributeComparerWindow(OptionsWindow):
-    '''
-    
+class AttributeCheckerWindow(OptionsWindow):
+    '''Create the attributeComparer Maya GUI window
+
+    The AttributeCheckerWindow class is used to create an object
+    instance of an attribute checker window. This class inherits
+    from a provided copy of OptionsWindowBaseClass in order to
+    mimic the format of a Maya window.
+
+    Usage:
+        An AttributeCheckerWindow object is created as such::
+
+            $ object = AttributeCheckerWindow()
+
+        Display the GUI of said object as such::
+
+            $ object.create()
+
+    Note:
+        * Check OptionsWindowBaseClass.py for more detail on base
+          class implementation.
     '''
 
     def __init__(self):
@@ -34,10 +62,29 @@ class attributeComparerWindow(OptionsWindow):
         self.nodeTextField = None
 
     def setCurrentValue(self, nodeAttr, *args):
-        # Needs to check for type and cast correctly, can be done with exec()
-        mc.setAttr(nodeAttr, mc.textField(self.currentValues[3], query=True, text=True))
+        '''Set the selected attribute's value to field value
+
+        This function is incomplete due to missing functionality
+        of cast type. 
+        
+        Notes:
+            * Needs to check for type and cast correctly
+            * Can be done with exec()
+        '''
+        mc.setAttr(
+            nodeAttr, mc.textField(
+                self.currentValues[3], query=True, text=True))
     
     def textListSelectCommand(self, i, *args):
+        '''Set the sibling text scroll list and other variables on selection.
+
+        Args:
+            i (int): The index of text scroll list. 0 or 1.
+
+        Note:
+            * The *args is only used for ease of use with partial() in
+              button's command flag.
+        '''
         # Get selected item
         selected = mc.textScrollList(
             self.textLists[i],
@@ -50,12 +97,13 @@ class attributeComparerWindow(OptionsWindow):
             edit=True,
             selectItem=selected)
 
-        # Set current values
+        # Set selected Attribute
         mc.text(
             self.selectedText,
             edit=True,
             label="Selected: %s"%selected[0])
-        
+
+        # Set type, value1, value2
         mc.textField(
             self.currentValues[0],
             edit=True,
@@ -71,6 +119,7 @@ class attributeComparerWindow(OptionsWindow):
                 edit=True,
                 text=self.dictionaries[1][selected[0]][0])
 
+        # Set current value
         tempAttr="%s.%s"%(
             mc.textField(self.nodeTextField, query=True, text=True),
             selected[0])
@@ -83,6 +132,7 @@ class attributeComparerWindow(OptionsWindow):
         except (RuntimeError, ValueError, TypeError) as e:
             tempValue="FAILED"
 
+        # Allow for setting attribute value
         mc.textField(
             self.currentValues[3],
             edit=True,
@@ -91,6 +141,20 @@ class attributeComparerWindow(OptionsWindow):
             enterCommand=partial(self.setCurrentValue, tempAttr))
         
     def setMatrix(self, dictionaries, num, *args):
+        '''Create data structure to store incoming attribute information.
+        
+        This function is used as the command for the "Get Attribute" buttons.
+
+        Args:
+            dictionaries ({string:(string,string,string)}): A reference to the
+                instance's dictionaries attribute.
+            num (int): The index of dictionaries. 0 or 1.
+
+        Note:
+            * The *args is only used for ease of use with partial() in
+              button's command flag.
+        '''
+        # Get user input
         nodeText = mc.textField(self.nodeTextField, query=True, text=True)
 
         # Populate temporary dictionary
@@ -122,6 +186,11 @@ class attributeComparerWindow(OptionsWindow):
             label="Last Get: %s"%time.ctime(time.time()))
 
     def setColumn(self, i):
+        '''Create the selection column of the GUI by index.
+
+        Args:
+            i (int): The index of column. 0 or 1.
+        '''
         mc.columnLayout()
         
         self.textLists.append(
@@ -139,13 +208,18 @@ class attributeComparerWindow(OptionsWindow):
         mc.setParent("..")
 
     def displayOptions(self):
+        '''Build the GUI by overriding base class's displayOptions.
+
+        '''
         col = mc.columnLayout(adjustableColumn=True)
         
         self.nodeTextField = mc.textField(
             alwaysInvokeEnterCommandOnReturn=True,
             text=self.defaultNodeTextFieldText)
         
-        mc.rowLayout(numberOfColumns=2, columnAlign=[(1, "center"),(2,"center")])
+        mc.rowLayout(
+            numberOfColumns=2,
+            columnAlign=[(1, "center"),(2,"center")])
 
         self.setColumn(0)
         self.setColumn(1)
@@ -156,38 +230,18 @@ class attributeComparerWindow(OptionsWindow):
 
         self.selectedText = mc.text(label="Selected: None")
         mc.rowLayout(numberOfColumns=8)
-        ''',
-        columnAlign=[(1, "left"),(2,"left"),(3,"left"),(4,"left")],
-        columnWidth=[(1,128),(2,128),(3,128),(4,128)])'''
-        mc.columnLayout()
-        mc.text(label="Type")
-        mc.setParent("..")
-        mc.columnLayout()
-        self.currentValues.append(
-            mc.textField(text="None", enable=False))
-        mc.setParent("..")
-        mc.columnLayout()
-        mc.text(label="Value 1")
-        mc.setParent("..")
-        mc.columnLayout()
-        self.currentValues.append(
-            mc.textField(text="None", enable=False))#width=128, adjustableColumn=0)
-        mc.setParent("..")
-        mc.columnLayout()
-        mc.text(label="Value 2")
-        mc.setParent("..")
-        mc.columnLayout()
-        self.currentValues.append(
-            mc.textField(text="None", enable=False))# width=128, adjustableColumn=0)
-        mc.setParent("..")
-        mc.columnLayout()
-        mc.text(label="Current")
-        mc.setParent("..")
-        mc.columnLayout()
-        self.currentValues.append(
-            mc.textField(text="None", enable=False))#width=128, adjustableColumn=0)
-        mc.setParent("..")
 
+        # Add custom text field columns
+        fieldElements = ("Type","Value 1","Value 2","Current")
+        for elm in fieldElements:
+            mc.columnLayout()
+            mc.text(label=elm)
+            mc.setParent("..")
+            mc.columnLayout()
+            self.currentValues.append(
+                mc.textField(text="None", enable=False))
+            mc.setParent("..")
+        
         mc.setParent("..")
         
         #mc.frameLayout()
@@ -195,13 +249,13 @@ class attributeComparerWindow(OptionsWindow):
         mc.setParent(self.optionsForm)
 
     def applyBtnCmd(self, *args):
-        comparisonWindow(self.dictionaries)
+        AttributeComparisonWindow(self.dictionaries)
 
     def actionCmd(self, *args):
         self.applyBtnCmd()
         self.closeBtnCmd()
 
-class comparisonWindow:
+class AttributeComparisonWindow:
     titles = ["Attribute Name","Original Value","Changed Value","Value Type"]
     commands = [
         "key", 
@@ -271,7 +325,7 @@ class comparisonWindow:
         mc.setParent("..")
 
 def main():
-    win = attributeComparerWindow()
+    win = AttributeCheckerWindow()
     win.create()
 
 if __name__ == "__main__":
