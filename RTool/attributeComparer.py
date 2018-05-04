@@ -197,6 +197,10 @@ class attributeComparerWindow(OptionsWindow):
     def applyBtnCmd(self, *args):
         comparisonWindow(self.dictionaries)
 
+    def actionCmd(self, *args):
+        self.applyBtnCmd()
+        self.closeBtnCmd()
+
 class comparisonWindow:
     titles = ["Attribute Name","Original Value","Changed Value","Value Type"]
     commands = [
