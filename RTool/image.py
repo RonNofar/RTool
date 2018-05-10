@@ -30,7 +30,7 @@ def pixelateImage(imagePath, savePath=rootPath, bitSize=32):
         * Fix horizontal bitScale and portrait style images
     
     '''
-    imgNameWithExtension = basename(imagePath)
+    imgNameWithExtension = os.path.basename(imagePath)
     imgName = imgNameWithExtension[:imgNameWithExtension.find('.')]
     img = Image.open(imagePath)
     pixels = img.load()
