@@ -7,12 +7,16 @@ used in combination with RTool.video.
 
 import os
 
+from RTool.time import Stopwatch
+
 from RTool.util.importer import ImportHandler
 exec(ImportHandler(["imageio","PIL"]))
 
-from PIL import Image
+from PIL import Image, ImageStat
 
 rootPath = os.path.dirname(os.path.realpath(__file__))
+
+stopwatch = Stopwatch()
 
 def pixelateImage(imagePath, savePath=rootPath, bitSize=32):
     '''Pixelate an image to a specified bit size.
