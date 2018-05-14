@@ -5,6 +5,8 @@ used in combination with RTool.video.
 
 '''
 
+from __future__ import division
+
 import os
 
 from RTool.time import Stopwatch
@@ -15,8 +17,6 @@ exec(ImportHandler(["imageio","PIL"]))
 from PIL import Image, ImageStat
 
 rootPath = os.path.dirname(os.path.realpath(__file__))
-
-stopwatch = Stopwatch()
 
 def pixelateImage(imagePath, savePath=rootPath, bitSize=32):
     '''Pixelate an image to a specified bit size.
@@ -34,6 +34,8 @@ def pixelateImage(imagePath, savePath=rootPath, bitSize=32):
         * Fix horizontal bitScale and portrait style images
     
     '''
+    stopwatch = Stopwatch()
+    
     imgNameWithExtension = os.path.basename(imagePath)
     imgName = imgNameWithExtension[:imgNameWithExtension.find('.')]
     img = Image.open(imagePath)
@@ -52,7 +54,7 @@ def pixelateImage(imagePath, savePath=rootPath, bitSize=32):
           %(imgName,width,height,bitSize,bitSizeY,stopwatch.current()))
 
     #outputImg = Image.new('RGB', (width,height), (0,0,0)) # used to maintain resolution
-    bitOutputImg = Image.new('RGB', (bitSize, bitSizeY), (0,0,0))
+    bitOutputImg = Image.new('RGBA', (bitSize, bitSizeY), (0,0,0))
     bitPixels = bitOutputImg.load()
     
     for x in range(bitSize):
@@ -79,7 +81,7 @@ def pixelateImage(imagePath, savePath=rootPath, bitSize=32):
             roundedMedianColor = [int(color) for color in medianColor]
             #print(roundedMeanColor)
             bit = Image.new(
-                'RGB',
+                'RGBA',
                 (widthBitRatio,heightBitRatio),
                 tuple(roundedMedianColor))
             #outputImg.paste(bit, (x*widthBitRatio,y*heightBitRatio))

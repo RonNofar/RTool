@@ -16,6 +16,8 @@ Last updated:
     May 2018 (Check GitHub for exact date and time)
 '''
 
+import os
+
 from OptionsWindowBaseClass import OptionsWindow
 from functools import partial
 
